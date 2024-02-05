@@ -101,10 +101,13 @@ gallery.addEventListener("click", (e) => {
      <img src=${largeImg} width=700 height=400 alt=${altImages} >
     </div>
 `);
-  instance.show();
-  gallery.addEventListener("keydown", (keyEsc) => {
-    if (keyEsc.code === "Escape") {
-      instance.close();
+  instance.show(()=>document.addEventListener("keydown", keyDownEscape));
+  instance.close(()=>document.removeEventListener('keydown', keyDownEscape))
+
+  function keyDownEscape(event){
+    if(event.key ==="Escape"){
+      instance.close()
     }
-  });
+    
+  }
 });
