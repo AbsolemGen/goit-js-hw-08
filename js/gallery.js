@@ -93,7 +93,11 @@ renderGallery(images);
 
 gallery.addEventListener("click", (e) => {
   e.preventDefault();
-  if (e.target === e.currentTarget) return;
+  const isImageClick = e.target.classList.contains('gallery-img');
+
+  if (!isImageClick) {
+    return;
+  }
   const largeImg = e.target.dataset.source;
   const altImages = e.target.description;
   const instance = basicLightbox.create(`
@@ -102,12 +106,13 @@ gallery.addEventListener("click", (e) => {
     </div>
 `);
   instance.show(()=>document.addEventListener("keydown", keyDownEscape));
-  instance.close(()=>document.removeEventListener('keydown', keyDownEscape))
+ 
 
   function keyDownEscape(event){
     if(event.key ==="Escape"){
       instance.close()
     }
-    
+    instance.close(()=>document.removeEventListener('keydown', keyDownEscape))
+
   }
 });
